@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Band\Instrument;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use JoelButcher\Socialstream\HasConnectedAccounts;
@@ -33,8 +35,10 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
+        'instrument_id',
     ];
 
     /**
@@ -75,5 +79,10 @@ class User extends Authenticatable
         return filter_var($this->profile_photo_path, FILTER_VALIDATE_URL)
             ? Attribute::get(fn () => $this->profile_photo_path)
             : $this->getPhotoUrl();
+    }
+
+    public function instrument(): BelongsTo
+    {
+        return $this->belongsTo(Instrument::class);
     }
 }

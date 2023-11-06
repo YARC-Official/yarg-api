@@ -18,6 +18,7 @@ export default function Register() {
         name: '',
         email: '',
         password: '',
+        username: '',
         password_confirmation: '',
         terms: false,
     });
@@ -47,6 +48,21 @@ export default function Register() {
                         autoComplete='name'
                     />
                     <InputError className='mt-2' message={form.errors.name} />
+                </div>
+
+                <div className='mt-4'>
+                    <InputLabel htmlFor='name'>Username</InputLabel>
+                    <TextInput
+                        id='username'
+                        type='text'
+                        className='mt-1 block w-full'
+                        value={form.data.username}
+                        onChange={e => form.setData('username', e.currentTarget.value)}
+                        required
+                        autoFocus
+                        autoComplete='username'
+                    />
+                    <InputError className='mt-2' message={form.errors.username} />
                 </div>
 
                 <div className='mt-4'>

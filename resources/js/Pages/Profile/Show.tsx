@@ -21,7 +21,6 @@ export default function Show({
                                  confirmsTwoFactorAuthentication,
                              }: Props) {
     const page = useTypedPage();
-    console.log(page);
 
     const canUpdatePassword = page.props.jetstream.canUpdatePassword && page.props.socialstream.hasPassword;
     return (

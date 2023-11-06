@@ -32,6 +32,7 @@ class JetstreamServiceProvider extends ServiceProvider
         Jetstream::createTeamsUsing(CreateTeam::class);
         Jetstream::updateTeamNamesUsing(UpdateTeamName::class);
         Jetstream::addTeamMembersUsing(AddTeamMember::class);
+        Jetstream::managesProfilePhotos();
         Jetstream::inviteTeamMembersUsing(InviteTeamMember::class);
         Jetstream::removeTeamMembersUsing(RemoveTeamMember::class);
         Jetstream::deleteTeamsUsing(DeleteTeam::class);
