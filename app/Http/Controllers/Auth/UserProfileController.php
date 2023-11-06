@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Band\Instrument;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Carbon;
@@ -26,10 +27,13 @@ class UserProfileController extends Controller
     {
         $this->validateTwoFactorAuthenticationState($request);
 
+        // TODO: cache instruments call
+
         return Jetstream::inertia()->render($request, 'Profile/Show', [
             'confirmsTwoFactorAuthentication' => Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm'),
             'sessions' => $this->sessions($request)->all(),
-            'countries' => Country::get(['id', 'flag', 'name'])
+            'countries' => Country::get(['id', 'flag', 'name']),
+            'instruments' => Instrument::all(),
         ]);
     }
 

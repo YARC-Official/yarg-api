@@ -10,22 +10,23 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import SecondaryButton from '@/Components/SecondaryButton';
-import { Country, User } from '@/types';
+import { Country, Instrument, User } from '@/types';
 import useTypedPage from '@/Hooks/useTypedPage';
 
 interface Props {
     user: User;
     countries: Country[];
+    instruments: Instrument[];
 }
 
 
-export default function UpdateProfileInformationForm({ user, countries }: Props) {
-    console.log(countries);
+export default function UpdateProfileInformationForm({ user, countries, instruments }: Props) {
     const form = useForm({
         _method: 'PUT',
         name: user.name,
         email: user.email,
         country_code: user.country_code,
+        instrument_id: user.instrument_id,
         photo: null as File | null,
     });
     const route = useRoute();
@@ -174,24 +175,6 @@ export default function UpdateProfileInformationForm({ user, countries }: Props)
                 <InputError message={form.errors.name} className='mt-2' />
             </div>
 
-            {/* <!-- Country Code --> */}
-            <div className='col-span-6 sm:col-span-4'>
-                <InputLabel htmlFor='country_code' value='Country' />
-                <select
-                    id='country_code'
-                    className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full'}
-                    name={'country_code'}
-                    autoFocus
-                    onChange={e => form.setData('country_code', e.currentTarget.value)}
-                >
-                    {countries.map((country) =>
-                        <option selected={country.id === user.country_code} value={country.id}>{country.flag + ' ' + country.name} </option>)
-                    }
-                </select>
-                <InputError message={form.errors.name} className='mt-2' />
-            </div>
-
-
             {/* <!-- Email --> */}
             <div className='col-span-6 sm:col-span-4'>
                 <InputLabel htmlFor='email' value='Email' />
@@ -229,6 +212,44 @@ export default function UpdateProfileInformationForm({ user, countries }: Props)
                         )}
                     </div>
                 ) : null}
+            </div>
+
+            {/* <!-- Instrument --> */}
+            <div className='col-span-6 sm:col-span-4'>
+                <InputLabel htmlFor='instrument_id' value='Instrument' />
+                <select
+                    id='instrument_id'
+                    className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full'}
+                    name={'instrument_id'}
+                    autoFocus
+                    onChange={e => form.setData('instrument_id', parseInt(e.currentTarget.value))}
+                >
+                    <option value=''>None</option>
+                    {instruments.map((instrument) =>
+
+                        <option selected={instrument.id === user.instrument_id}
+                                value={instrument.id}>{instrument.name} </option>)
+                    }
+                </select>
+                <InputError message={form.errors.instrument_id} className='mt-2' />
+            </div>
+
+            {/* <!-- Country Code --> */}
+            <div className='col-span-6 sm:col-span-4'>
+                <InputLabel htmlFor='country_code' value='Country' />
+                <select
+                    id='country_code'
+                    className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full'}
+                    name={'country_code'}
+                    autoFocus
+                    onChange={e => form.setData('country_code', e.currentTarget.value)}
+                >
+                    {countries.map((country) =>
+                        <option selected={country.id === user.country_code}
+                                value={country.id}>{country.flag + ' ' + country.name} </option>)
+                    }
+                </select>
+                <InputError message={form.errors.country_code} className='mt-2' />
             </div>
         </FormSection>
     );

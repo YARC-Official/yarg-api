@@ -24,6 +24,7 @@ export interface User {
     created_at: DateTime;
     updated_at: DateTime;
     instrument: Nullable<Instrument>;
+    instrument_id: number;
     country_code: Nullable<string>;
 }
 

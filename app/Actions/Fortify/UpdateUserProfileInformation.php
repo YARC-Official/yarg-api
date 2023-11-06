@@ -23,7 +23,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
-            'country_code' => ['nullable', new In(Country::get('id')->pluck('id')->toArray())]
+            'country_code' => ['nullable', new In(Country::get('id')->pluck('id')->toArray())],
+            'instrument_id' => ['nullable', 'exists:instruments,id']
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -38,6 +39,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'name' => $input['name'],
                 'email' => $input['email'],
                 'country_code' => $input['country_code'],
+                'instrument_id' => $input['instrument_id'],
             ])->save();
         }
     }
@@ -53,6 +55,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => $input['name'],
             'email' => $input['email'],
             'email_verified_at' => null,
+            'country_code' => $input['country_code'],
+            'instrument_id' => $input['instrument_id'],
         ])->save();
 
         $user->sendEmailVerificationNotification();
