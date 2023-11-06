@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/profile/{user:username}', [ProfileController::class, 'getProfile']);
+Route::get('/test', [TestController::class, 'getTest']);
 
 Route::middleware([
     'auth:sanctum',
