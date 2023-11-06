@@ -38,6 +38,7 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'country_code',
         'instrument_id',
     ];
 

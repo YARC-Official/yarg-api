@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Band\Instrument;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -29,6 +30,8 @@ class UserFactory extends Factory
             'two_factor_recovery_codes' => null,
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
+            'instrument' => Instrument::factory(),
+            'country_code' => $this->faker->randomElement(['br', 'us', 'gp', 'aa', 'cn', 'kr', 'jp']),
             'current_team_id' => null,
         ];
     }
@@ -50,14 +53,14 @@ class UserFactory extends Factory
      */
     public function withPersonalTeam(callable $callback = null): static
     {
-        if (! Features::hasTeamFeatures()) {
+        if (!Features::hasTeamFeatures()) {
             return $this->state([]);
         }
 
         return $this->has(
             Team::factory()
-                ->state(fn (array $attributes, User $user) => [
-                    'name' => $user->name.'\'s Team',
+                ->state(fn(array $attributes, User $user) => [
+                    'name' => $user->name . '\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])

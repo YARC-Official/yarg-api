@@ -11,7 +11,14 @@ import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 import Socialstream from '@/Components/Socialstream';
 
-export default function Register() {
+interface Country {
+    id: string;
+    flag: string;
+
+    name: string;
+}
+
+export default function Register({ countries }: { countries: Country[] }) {
     const page = useTypedPage();
     const route = useRoute();
     const form = useForm({
@@ -20,6 +27,7 @@ export default function Register() {
         password: '',
         username: '',
         password_confirmation: '',
+        country_code: '',
         terms: false,
     });
 
@@ -63,6 +71,20 @@ export default function Register() {
                         autoComplete='username'
                     />
                     <InputError className='mt-2' message={form.errors.username} />
+                </div>
+                <div className='mt-4'>
+                    <InputLabel htmlFor='country_code'>Country</InputLabel>
+                    <select
+                        id='country_code'
+                        className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full'}
+                        name={'country_code'}
+                        autoFocus
+                        onChange={e => form.setData('country_code', e.currentTarget.value)}
+                    >
+                        {countries.map((country) => <option
+                            value={country.id}>{country.flag + ' ' + country.name} </option>)}
+                    </select>
+                    <InputError className='mt-2' message={form.errors.country_code} />
                 </div>
 
                 <div className='mt-4'>

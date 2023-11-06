@@ -6,7 +6,9 @@ use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\In;
 use Laravel\Fortify\Contracts\UpdatesUserProfileInformation;
+use Squire\Models\Country;
 
 class UpdateUserProfileInformation implements UpdatesUserProfileInformation
 {
@@ -21,6 +23,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'country_code' => ['nullable', new In(Country::get('id')->pluck('id')->toArray())]
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -34,6 +37,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             $user->forceFill([
                 'name' => $input['name'],
                 'email' => $input['email'],
+                'country_code' => $input['country_code'],
             ])->save();
         }
     }

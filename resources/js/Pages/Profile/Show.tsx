@@ -7,18 +7,22 @@ import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfile
 import useTypedPage from '@/Hooks/useTypedPage';
 import SectionBorder from '@/Components/SectionBorder';
 import AppLayout from '@/Layouts/AppLayout';
-import { Session } from '@/types';
+import { Session, Country } from '@/types';
 import ConnectedAccountsForm from '@/Pages/Profile/Partials/ConnectedAccountsForm';
 import SetPasswordForm from '@/Pages/Profile/Partials/SetPasswordForm';
+
 
 interface Props {
     sessions: Session[];
     confirmsTwoFactorAuthentication: boolean;
+
+    countries: Country[];
 }
 
 export default function Show({
                                  sessions,
                                  confirmsTwoFactorAuthentication,
+                                 countries,
                              }: Props) {
     const page = useTypedPage();
 
@@ -36,7 +40,7 @@ export default function Show({
                 <div className='max-w-7xl mx-auto py-10 sm:px-6 lg:px-8'>
                     {page.props.jetstream.canUpdateProfileInformation ? (
                         <div>
-                            <UpdateProfileInformationForm user={page.props.auth.user!} />
+                            <UpdateProfileInformationForm user={page.props.auth.user!} countries={countries} />
 
                             <SectionBorder />
                         </div>

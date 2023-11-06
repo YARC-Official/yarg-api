@@ -23,8 +23,14 @@ export interface User {
     email_verified_at: Nullable<DateTime>;
     created_at: DateTime;
     updated_at: DateTime;
-
     instrument: Nullable<Instrument>;
+    country_code: Nullable<string>;
+}
+
+export interface Country {
+    id: string;
+    flag: string;
+    name: string;
 }
 
 export interface Auth {
