@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Band\Difficulty;
 use App\Models\Band\Instrument;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -34,6 +35,7 @@ class UserProfileController extends Controller
             'sessions' => $this->sessions($request)->all(),
             'countries' => Country::get(['id', 'flag', 'name']),
             'instruments' => Instrument::all(),
+            'difficulties' => Difficulty::all(),
         ]);
     }
 

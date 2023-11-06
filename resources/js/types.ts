@@ -24,7 +24,9 @@ export interface User {
     created_at: DateTime;
     updated_at: DateTime;
     instrument: Nullable<Instrument>;
+    difficulty: Nullable<Difficulty>;
     instrument_id: number;
+    difficulty_id: number;
     country_code: Nullable<string>;
 }
 
@@ -41,6 +43,12 @@ export interface Auth {
         current_team?: Team;
     }
     >;
+}
+
+export interface Difficulty {
+    id: number;
+    name: string;
+    slug: string;
 }
 
 export type Providers = 'github' | 'twitter-oauth-2' | 'discord';

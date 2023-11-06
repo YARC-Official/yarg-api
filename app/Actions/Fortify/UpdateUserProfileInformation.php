@@ -15,7 +15,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Validate and update the given user's profile information.
      *
-     * @param  array<string, string>  $input
+     * @param array<string, string> $input
      */
     public function update(User $user, array $input): void
     {
@@ -24,7 +24,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
             'country_code' => ['nullable', new In(Country::get('id')->pluck('id')->toArray())],
-            'instrument_id' => ['nullable', 'exists:instruments,id']
+            'instrument_id' => ['nullable', 'exists:instruments,id'],
+            'difficulty_id' => ['nullable', 'exists:gameplay_difficulties,id'],
         ])->validateWithBag('updateProfileInformation');
 
         if (isset($input['photo'])) {
@@ -40,6 +41,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'email' => $input['email'],
                 'country_code' => $input['country_code'],
                 'instrument_id' => $input['instrument_id'],
+                'difficulty_id' => $input['difficulty_id'],
             ])->save();
         }
     }
@@ -47,7 +49,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     /**
      * Update the given verified user's profile information.
      *
-     * @param  array<string, string>  $input
+     * @param array<string, string> $input
      */
     protected function updateVerifiedUser(User $user, array $input): void
     {
@@ -57,6 +59,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             'email_verified_at' => null,
             'country_code' => $input['country_code'],
             'instrument_id' => $input['instrument_id'],
+            'difficulty_id' => $input['difficulty_id'],
         ])->save();
 
         $user->sendEmailVerificationNotification();

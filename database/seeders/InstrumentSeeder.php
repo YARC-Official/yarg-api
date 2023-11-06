@@ -11,7 +11,10 @@ class InstrumentSeeder extends Seeder
     {
         foreach (config('yarg.instruments') as $instrument) {
             Instrument::query()
-                ->updateOrCreate(['name' => $instrument['name']], $instrument);
+                ->updateOrCreate(
+                    ['name' => $instrument['name']],
+                    [...$instrument, 'slug' => str($instrument['name'])->slug()->toString()]
+                );
         }
     }
 }

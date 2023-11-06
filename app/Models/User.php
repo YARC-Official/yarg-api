@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Band\Difficulty;
 use App\Models\Band\Instrument;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,6 +41,7 @@ class User extends Authenticatable
         'password',
         'country_code',
         'instrument_id',
+        'difficulty_id',
     ];
 
     /**
@@ -85,5 +87,10 @@ class User extends Authenticatable
     public function instrument(): BelongsTo
     {
         return $this->belongsTo(Instrument::class);
+    }
+
+    public function difficulty(): BelongsTo
+    {
+        return $this->belongsTo(Difficulty::class);
     }
 }

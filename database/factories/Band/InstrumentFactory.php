@@ -11,7 +11,9 @@ class InstrumentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement(['guitar', 'bass', 'drum'])
+            'name' => $this->faker->randomElement(['guitar', 'bass', 'drum']),
+            'slug' => $this->faker->randomElement(['guitar', 'bass', 'drum']),
+
         ];
     }
 }

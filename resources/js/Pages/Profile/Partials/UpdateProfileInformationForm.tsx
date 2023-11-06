@@ -10,23 +10,25 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import SecondaryButton from '@/Components/SecondaryButton';
-import { Country, Instrument, User } from '@/types';
+import { Country, Difficulty, Instrument, User } from '@/types';
 import useTypedPage from '@/Hooks/useTypedPage';
 
 interface Props {
     user: User;
     countries: Country[];
     instruments: Instrument[];
+    difficulties: Difficulty[];
 }
 
 
-export default function UpdateProfileInformationForm({ user, countries, instruments }: Props) {
+export default function UpdateProfileInformationForm({ user, countries, instruments, difficulties }: Props) {
     const form = useForm({
         _method: 'PUT',
         name: user.name,
         email: user.email,
         country_code: user.country_code,
         instrument_id: user.instrument_id,
+        difficulty_id: user.difficulty_id,
         photo: null as File | null,
     });
     const route = useRoute();
@@ -234,6 +236,26 @@ export default function UpdateProfileInformationForm({ user, countries, instrume
                 <InputError message={form.errors.instrument_id} className='mt-2' />
             </div>
 
+            {/* <!-- Instrument --> */}
+            <div className='col-span-6 sm:col-span-4'>
+                <InputLabel htmlFor='difficulty_id' value='Difficulty' />
+                <select
+                    id='difficulty_id'
+                    className={'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full'}
+                    name={'difficulty_id'}
+                    autoFocus
+                    onChange={e => form.setData('difficulty_id', parseInt(e.currentTarget.value))}
+                >
+                    <option value=''>None</option>
+                    {difficulties.map((difficulty) =>
+
+                        <option selected={difficulty.id === user.difficulty_id}
+                                value={difficulty.id}>{difficulty.name} </option>)
+                    }
+                </select>
+                <InputError message={form.errors.difficulty_id} className='mt-2' />
+            </div>
+
             {/* <!-- Country Code --> */}
             <div className='col-span-6 sm:col-span-4'>
                 <InputLabel htmlFor='country_code' value='Country' />
@@ -244,6 +266,7 @@ export default function UpdateProfileInformationForm({ user, countries, instrume
                     autoFocus
                     onChange={e => form.setData('country_code', e.currentTarget.value)}
                 >
+                    <option>🏁 None</option>
                     {countries.map((country) =>
                         <option selected={country.id === user.country_code}
                                 value={country.id}>{country.flag + ' ' + country.name} </option>)
