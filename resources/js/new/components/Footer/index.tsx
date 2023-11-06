@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "./footer.module.css";
 import Logo from '@/new/components/logo';
+import { Discord, Github, Instagram, Reddit, TikTok, Twitch, X, Youtube } from '../Icons';
 
 const Footer: React.FC = () => {
   return <footer className={styles.footer}>
@@ -54,7 +55,30 @@ const Footer: React.FC = () => {
         </div>
 
         <div className={styles.socials}>
-            kkk socials
+            <a href="https://discord.gg/yarg" target="_blank">
+                <Discord />
+            </a>
+            <a href="https://github.com/YARC-Official" target="_blank">
+                <Github />
+            </a>
+            <a href="https://x.com/yarggame" target="_blank">
+                <X />
+            </a>
+            <a href="https://www.youtube.com/@YARGGame" target="_blank">
+                <Youtube />
+            </a>
+            <a href="https://www.reddit.com/r/yarg/" target="_blank">
+                <Reddit />
+            </a>
+            <a href="https://www.twitch.tv/yarggame" target="_blank">
+                <Twitch />
+            </a>
+            <a href="https://www.instagram.com/yarg.game" target="_blank">
+                <Instagram />
+            </a>
+            <a href="https://www.tiktok.com/@yarggame" target="_blank">
+                <TikTok />
+            </a>
         </div>
     </div>
 
