@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/profile/{user:username}', [ProfileController::class, 'getProfile']);
-Route::get('/test', [TestController::class, 'getTest']);
+Route::get('/test', [TestController::class, 'getTest'])->name('test');
 
 Route::middleware([
     'auth:sanctum',

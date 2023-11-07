@@ -11,5 +11,15 @@
 
     --headerBackground: #05060B;
     --headerAccent: #717F9E;
-    
+}
+
+.bg-main {
+    background-color: var(--headerBackground);
+}
+
+.header-text {
+    color: var(--headerAccent);
+}
+.header-text-focus {
+    color: #9196a7;
 }
