@@ -5,3 +5,11 @@
 [x-cloak] {
     display: none;
 }
+
+:root {
+    --blue: #2ED9FF;
+
+    --headerBackground: #05060B;
+    --headerAccent: #717F9E;
+    
+}
