@@ -2,6 +2,8 @@ import React from 'react';
 import styles from "./header.module.css";
 import Logo from '../logo';
 import { LogIn } from 'lucide-react';
+import { Link } from '@inertiajs/react';
+import useRoute from '@/Hooks/useRoute';
 
 import useTypedPage from '@/Hooks/useTypedPage';
 import { User } from '@/types';
@@ -38,12 +40,20 @@ const Logged: React.FC<{user: User}> = ({user}) => {
     </div>;
 }
 
-const NotLogged: React.FC = () => <div className={styles.user}>
-    <div>Sign Up</div>
-    <div className={styles.button}>
-        <LogIn />
-        Log In
+const NotLogged: React.FC = () => {
+    const route = useRoute();
+
+    return <div className={styles.user}>
+        <Link href={route('register')}>
+            <div>Sign Up</div>
+        </Link>
+        <Link href={route('login')}>
+            <div className={styles.button}>
+                <LogIn />
+                Log In
+            </div>
+        </Link>
     </div>
-</div>;
+};
 
 export default Header;
