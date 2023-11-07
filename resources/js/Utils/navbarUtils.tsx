@@ -5,8 +5,8 @@ import useRoute from '@/Hooks/useRoute';
 
 
 export const switchToTeam = (e: React.FormEvent, team: Team) => {
-    const route = useRoute();
     e.preventDefault();
+    const route = useRoute();
 
     router.put(
         route('current-team.update'),

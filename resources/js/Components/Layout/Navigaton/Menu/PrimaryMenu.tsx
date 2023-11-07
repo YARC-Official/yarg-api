@@ -7,7 +7,8 @@ import classNames from 'classnames';
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
-import { logout, switchToTeam } from '@/Utils/navbarUtils';
+import {  switchToTeam } from '@/Utils/navbarUtils';
+import { router } from '@inertiajs/core';
 
 export default function PrimaryMenu({
                                         showingNavigationDropdown,
@@ -15,6 +16,11 @@ export default function PrimaryMenu({
                                     }: { showingNavigationDropdown: boolean, setShowingNavigationDropdown: Dispatch<SetStateAction<boolean>> }) {
     const route = useRoute();
     const page = useTypedPage();
+
+    const logout = (e: React.FormEvent) => {
+        e.preventDefault();
+        router.post(route('logout'));
+    };
 
 
     return (
@@ -38,12 +44,20 @@ export default function PrimaryMenu({
                             Dashboard
                         </NavLink>
                     </div>
+                    <div className='hidden space-x-8 sm:-my-px sm:ml-10 sm:flex'>
+                        <NavLink
+                            href={route('test')}
+                            active={route().current('test')}
+                        >
+                            Test Page
+                        </NavLink>
+                    </div>
                 </div>
 
                 <div className='hidden sm:flex sm:items-center sm:ml-6'>
                     <div className='ml-3 relative'>
                         {/* <!-- Teams Dropdown --> */}
-                        {page.props.jetstream.hasTeamFeatures ? (
+                        {page.props.jetstream.hasTeamFeatures && page.props.auth.user ? (
                             <Dropdown
                                 align='right'
                                 width='60'
@@ -73,7 +87,7 @@ export default function PrimaryMenu({
                             >
                                 <div className='w-60'>
                                     {/* <!-- Team Management --> */}
-                                    {page.props.jetstream.hasTeamFeatures ? (
+                                    {page.props.jetstream.hasTeamFeatures && page.props.auth.user ? (
                                         <>
                                             <div className='block px-4 py-2 text-xs text-gray-400'>
                                                 Manage Team

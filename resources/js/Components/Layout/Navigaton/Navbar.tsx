@@ -4,6 +4,7 @@ import ResponsiveMenu from '@/Components/Layout/Navigaton/Menu/ResponsiveMenu';
 
 export default function Navbar() {
 
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
