@@ -16,10 +16,6 @@ const HomeHero: React.FC = () => {
           <div className={styles.instrumentSection}>Pro Guitar</div>
         </div>
 
-        <span className={styles.description}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-        </span>
-
         <div className={styles.buttons}>
           <Button color="blue">
             Download
