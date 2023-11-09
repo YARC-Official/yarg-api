@@ -8,10 +8,18 @@ import useRoute from '@/Hooks/useRoute';
 import useTypedPage from '@/Hooks/useTypedPage';
 import { User } from '@/types';
 
-const Header: React.FC = () => {
+export type HeaderMode = "dark" | "transparent";
+
+type Props = {
+    mode?: HeaderMode;
+}
+
+const Header: React.FC<Props> = ({
+    mode = "dark"
+}: Props) => {
     const page = useTypedPage();
 
-    return <header className={styles.header}>
+    return <header data-mode={mode} className={styles.header}>
         <Logo className={styles.logo} />
 
         <ul>
