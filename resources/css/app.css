@@ -7,8 +7,10 @@
 }
 
 :root {
+    --borderRadius: 8px;
     --blue: #2ED9FF;
 
+    --heroBackground: #060811;
     --headerBackground: #05060B;
     --headerAccent: #717F9E;
 }

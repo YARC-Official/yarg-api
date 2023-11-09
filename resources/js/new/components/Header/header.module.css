@@ -3,11 +3,16 @@
     display: flex;
     padding: 0px var(--_gap);
     gap: calc(var(--_gap) * 2);
+    width: 100%;
     height: 75px;
     align-items: center;
 
     background: var(--headerBackground);
     color: #fff;
+}
+
+.header[data-mode="transparent"] {
+    background: none;
 }
 
 .header .logo {
