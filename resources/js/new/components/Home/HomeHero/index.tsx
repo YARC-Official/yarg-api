@@ -26,7 +26,8 @@ const HomeHero: React.FC = () => {
     </div>
 
     <div className={styles.video}>
-      
+      <div className={styles.gem} data-color="green"></div>
+      <div className={styles.gem} data-color="blue"></div>
     </div>
 
   </div>;

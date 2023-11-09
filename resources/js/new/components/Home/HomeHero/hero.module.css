@@ -1,5 +1,6 @@
 .hero {
-    background: var(--heroBackground) url(../../../images/gradient.png) center / 100% 100%;
+    background: url(../../../images/gradient.png) center / 100% 100%, url(../../../images/notes.png) top center / cover;
+    background-color: var(--heroBackground);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,6 +32,7 @@
 }
 
 .hero .video {
+    position: relative;
     aspect-ratio: 16/9;
     max-width: 960px;
     width: 100%;
@@ -39,4 +41,25 @@
     border-radius: var(--borderRadius);
     background: black;
     box-shadow: 0px 25px 100px 0px rgba(0, 0, 0, 0.75);
+}
+
+.hero .video .gem[data-color="blue"],
+.hero .video .gem[data-color="green"] {
+    position: absolute;
+}
+
+.hero .video .gem[data-color="green"] {
+    background: url(../../../images/green-gem.png);
+    aspect-ratio: 1;
+    height: 227px;
+    top: -85px;
+    left: -85px;
+}
+
+.hero .video .gem[data-color="blue"] {
+    background: url(../../../images/blue-gem.png);
+    aspect-ratio: 1;
+    height: 149px;
+    bottom: -35px;
+    right: -85px;
 }
