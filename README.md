@@ -11,9 +11,6 @@ API for yarg.in players track progress, news or anything related to the game.
 | MySQL   | 8.0     |
 
 
-* https://laravel.com/docs/10.x/passport
-* 
-
 ## Development
 
 * [ ] Bands
