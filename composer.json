@@ -5,9 +5,8 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "guzzlehttp/guzzle": "^7.2",
-        "inertiajs/inertia-laravel": "^0.6.8",
         "joelbutcher/socialstream": "^4.3",
         "laravel/framework": "^10.10",
         "laravel/jetstream": "^4.0",
@@ -24,7 +23,8 @@
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^7.0",
         "phpunit/phpunit": "^10.1",
-        "spatie/laravel-ignition": "^2.0"
+        "spatie/laravel-ignition": "^2.0",
+        "ext-xdebug": "*"
     },
     "autoload": {
         "psr-4": {
