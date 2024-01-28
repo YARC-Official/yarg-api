@@ -5,7 +5,7 @@ namespace App\Http\Requests\V1\Auth;
 use App\DTO\Auth\LoginDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecoveryRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,7 +15,9 @@ class RecoveryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required'],
+            'token' => ['required', 'string'],
+            'email' => ['required', 'exists:users'],
+            'password' => ['required','confirmed'],
         ];
     }
 

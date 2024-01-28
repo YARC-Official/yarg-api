@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Auth\LoginRequest;
 use App\Http\Requests\V1\Auth\RecoveryRequest;
 use App\Http\Requests\V1\Auth\RegisterRequest;
+use App\Http\Requests\V1\Auth\ResetPasswordRequest;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -53,7 +54,11 @@ class AuthController extends Controller
         } catch (\Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
         }
+    }
 
-
+    public function postReset(ResetPasswordRequest $request): Response
+    {
+        $this->service->resetPassword($request->validated());
+        return response()->noContent();
     }
 }

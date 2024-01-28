@@ -130,11 +130,15 @@ class AuthControllerTest extends TestCase
                 'password_confirmation' => 'password',
             ]);
 
-            $response->assertOk();
+            $response->assertNoContent();
 
             $this->assertDatabaseMissing('users', [
                 'id' => $user->getKey(),
-                'updated_at' => $user->updated_at
+                'password' => $user->password
+            ]);
+
+            $this->assertDatabaseMissing('password_reset_tokens', [
+                'email' => $user->getEmailForVerification()
             ]);
 
             return true;

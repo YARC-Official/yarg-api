@@ -21,6 +21,7 @@ Route::prefix('v1')->group(function() {
         Route::post('login', [AuthController::class, 'postLogin'])->name('v1.auth.login');
         Route::post('recovery', [AuthController::class, 'postRecovery'])->name('v1.auth.recovery');
         Route::get('/validate-token/{token}', [AuthController::class, 'getTokenValidation'])->name('v1.auth.validate-token');
+        Route::post('/reset', [AuthController::class, 'postReset'])->name('v1.auth.reset-password');
     });
 });
 

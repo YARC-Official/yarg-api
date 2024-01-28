@@ -88,4 +88,17 @@ class AuthService
     {
         return Carbon::parse($createdAt)->addMinutes(config('auth.passwords.users.expire'))->isPast();
     }
+
+    public function resetPassword(array $payload): void
+    {
+        $this->validateToken($payload['token'], $payload['email']);
+
+        User::query()
+            ->where('email', $payload['email'])
+            ->update(['password' => Hash::make($payload['password'])]);
+
+        DB::table('password_reset_tokens')
+            ->where('email', $payload['email'])
+            ->delete();
+    }
 }
