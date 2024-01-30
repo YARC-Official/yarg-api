@@ -7,6 +7,7 @@ use App\Http\Requests\V1\Auth\LoginRequest;
 use App\Http\Requests\V1\Auth\RecoveryRequest;
 use App\Http\Requests\V1\Auth\RegisterRequest;
 use App\Http\Requests\V1\Auth\ResetPasswordRequest;
+use App\Http\Requests\V1\Auth\TokenValidationRequest;
 use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -23,10 +24,9 @@ class AuthController extends Controller
 
     public function postRegister(RegisterRequest $request): JsonResponse
     {
-        return response()->json(
-            $this->service->register($request->validated()),
-            Response::HTTP_CREATED
-        );
+        $newUser = $this->service->register($request->toDto());
+
+        return response()->json($newUser, Response::HTTP_CREATED);
     }
 
     public function postLogin(LoginRequest $request): JsonResponse
@@ -38,18 +38,18 @@ class AuthController extends Controller
 
     public function postRecovery(RecoveryRequest $request): Response
     {
-        $this->service->sendRecovery($request->validated());
+        $this->service->sendRecovery($request->input('email'));
 
         return response()->noContent();
     }
 
     public function getTokenValidation(
-        Request $request,
+        TokenValidationRequest $request,
         string  $token
     ): Response
     {
         try {
-            $this->service->validateToken($token, $request->input('email'));
+            $this->service->validateToken($request->toDto($token));
             return response()->noContent();
         } catch (\Exception $exception) {
             return response()->json(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
@@ -58,7 +58,7 @@ class AuthController extends Controller
 
     public function postReset(ResetPasswordRequest $request): Response
     {
-        $this->service->resetPassword($request->validated());
+        $this->service->resetPassword($request->toDto());
         return response()->noContent();
     }
 }

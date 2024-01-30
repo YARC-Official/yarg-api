@@ -3,6 +3,9 @@
 namespace App\Services;
 
 use App\DTO\Auth\LoginDTO;
+use App\DTO\Auth\RegistrationDTO;
+use App\DTO\Auth\ResetPasswordDTO;
+use App\DTO\Auth\TokenValidationDTO;
 use App\Models\User;
 use Illuminate\Auth\Passwords\DatabaseTokenRepository;
 use Illuminate\Auth\Passwords\TokenRepositoryInterface;
@@ -17,12 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 class AuthService
 {
 
-    public function register(array $payload): User
+    public function register(RegistrationDTO $registrationDTO): User
     {
-        $payload['password'] = Hash::make($payload['password']);
-
         /** @var User $user */
-        return User::query()->create($payload);
+        return User::query()->create($registrationDTO->toDatabase());
     }
 
     public function authenticate(LoginDTO $payload): array
@@ -50,25 +51,25 @@ class AuthService
         ];
     }
 
-    public function sendRecovery(array $credentials): void
+    public function sendRecovery(string $email): void
     {
         $status = Password::broker(config('fortify.passwords'))
-            ->sendResetLink($credentials);
+            ->sendResetLink(['email' => $email]);
 
         if ($status !== Password::RESET_LINK_SENT) {
             Log::info('Recovery Alert', [
                 'status' => $status,
-                'email' => $credentials['email'],
+                'email' => $email,
                 'ip' => request()->getClientIp()
             ]);
         }
     }
 
-    public function validateToken(string $token, string $email): void
+    public function validateToken(TokenValidationDTO $tokenValidationDTO): void
     {
         /** @var User $user */
         $tokenExists = DB::table('password_reset_tokens')
-            ->where('email', $email)
+            ->where('email', $tokenValidationDTO->email)
             ->first();
 
         if (!$tokenExists) {
@@ -79,7 +80,7 @@ class AuthService
             throw ValidationException::withMessages(['token' => 'Token Expired.']);
         }
 
-        if (!Hash::check($token, $tokenExists->token)) {
+        if (!Hash::check($tokenValidationDTO->token, $tokenExists->token)) {
             throw ValidationException::withMessages(['token' => 'Invalid Token.']);
         }
     }
@@ -89,16 +90,16 @@ class AuthService
         return Carbon::parse($createdAt)->addMinutes(config('auth.passwords.users.expire'))->isPast();
     }
 
-    public function resetPassword(array $payload): void
+    public function resetPassword(ResetPasswordDTO $resetPasswordDTO): void
     {
-        $this->validateToken($payload['token'], $payload['email']);
+        $this->validateToken($resetPasswordDTO->tokenValidation);
 
         User::query()
-            ->where('email', $payload['email'])
-            ->update(['password' => Hash::make($payload['password'])]);
+            ->where('email', $resetPasswordDTO->tokenValidation->email)
+            ->update(['password' => Hash::make($resetPasswordDTO->password)]);
 
         DB::table('password_reset_tokens')
-            ->where('email', $payload['email'])
+            ->where('email', $resetPasswordDTO->tokenValidation->email)
             ->delete();
     }
 }
