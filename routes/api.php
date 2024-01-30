@@ -19,6 +19,9 @@ Route::prefix('v1')->group(function() {
     Route::prefix('auth')->group(function () {
         Route::post('register', [AuthController::class, 'postRegister'])->name('v1.auth.register');
         Route::post('login', [AuthController::class, 'postLogin'])->name('v1.auth.login');
+        Route::post('recovery', [AuthController::class, 'postRecovery'])->name('v1.auth.recovery');
+        Route::get('/validate-token/{token}', [AuthController::class, 'getTokenValidation'])->name('v1.auth.validate-token');
+        Route::post('/reset', [AuthController::class, 'postReset'])->name('v1.auth.reset-password');
     });
 });
 
