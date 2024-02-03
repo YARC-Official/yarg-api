@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Auth;
 
+use App\DTO\Auth\RegistrationDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RegisterRequest extends FormRequest
@@ -19,5 +20,10 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'confirmed'],
             'email' => ['required', 'unique:users'],
         ];
+    }
+
+    public function toDto(): RegistrationDTO
+    {
+        return RegistrationDTO::fromRequest($this->validated());
     }
 }

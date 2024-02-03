@@ -71,7 +71,6 @@ class AuthControllerTest extends TestCase
 
     public function test_should_log_recovery_with_wrong_credentials()
     {
-        Log::fake();
 
         $payload = ['email' => 'danielreis@gmail.com'];
 
@@ -102,7 +101,7 @@ class AuthControllerTest extends TestCase
 
         Notification::assertSentTo($user, ResetPassword::class, function (object $notification) use ($user) {
             $response = $this->getJson(route('v1.auth.validate-token', [
-                'token' => $notification->token . 's',
+                'token' => $notification->token,
                 'email' => $user->getEmailForVerification()
             ]));
 
