@@ -1,7 +1,7 @@
 on: push
-name: CI
+name: Laravel Test Suite w/ PHPUnit
 jobs:
-  phpunit:
+  Testing:
     runs-on: ubuntu-latest
     container:
       image: kirschbaumdevelopment/laravel-test-runner:8.2
