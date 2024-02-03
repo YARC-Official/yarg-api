@@ -4,10 +4,14 @@ namespace App\Models\Source;
 
 use App\Enum\Source\GameTypeEnum;
 use App\Enum\Source\SourceTypeEnum;
+use Database\Factories\Source\SourceFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Source extends Model
 {
+    use HasFactory;
+
     protected $table = 'song_sources';
 
     protected $fillable = [
@@ -33,5 +37,10 @@ class Source extends Model
             $this->source_type->value,
             $this->icon
         );
+    }
+
+    protected static function newFactory(): SourceFactory
+    {
+        return SourceFactory::new();
     }
 }
