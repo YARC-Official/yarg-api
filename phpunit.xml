@@ -11,6 +11,10 @@
         <testsuite name="Feature">
             <directory>tests/Feature</directory>
         </testsuite>
+
+        <testsuite name="Jetstream">
+            <exclude>tests/Jetstream/*</exclude>
+        </testsuite>
     </testsuites>
     <source>
         <include>
