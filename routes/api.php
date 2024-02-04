@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\V1\AuthController;
+use App\Http\Controllers\V1\SourceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,8 @@ Route::prefix('v1')->group(function() {
         Route::get('/validate-token/{token}', [AuthController::class, 'getTokenValidation'])->name('v1.auth.validate-token');
         Route::post('/reset', [AuthController::class, 'postReset'])->name('v1.auth.reset-password');
     });
+
+    Route::get('/sources', [SourceController::class, 'getGameSources'])->name('v1.sources.paginate');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

@@ -1,0 +1,36 @@
+{
+    "type": "base",
+    "sources": [
+        {
+            "ids": [
+                "$DEFAULT$"
+            ],
+            "names": {
+                "en-US": "Custom/Unknown"
+            },
+            "icon": "custom",
+            "type": "custom"
+        },
+        {
+            "ids": [
+                "yarg"
+            ],
+            "names": {
+                "en-US": "YARG"
+            },
+            "icon": "yarg",
+            "type": "game"
+        },
+        {
+            "ids": [
+                "gh",
+                "gh1"
+            ],
+            "names": {
+                "en-US": "Guitar Hero"
+            },
+            "icon": "gh",
+            "type": "gh"
+        }
+    ]
+}
